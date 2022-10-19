@@ -1,0 +1,22 @@
+.form {
+    padding: 12px 24px;
+    border-radius: 5px;
+    background-color: #343a40;
+    width: 400px;
+}
+
+.search {
+    font-size: 14px;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    color: #e9ecef;
+}
+
+::placeholder {
+    color: #adb5bd;
+}
+
+.focused {
+    box-shadow: inset 0 0 0 1px #f59f00;
+}
