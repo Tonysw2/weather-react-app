@@ -2,11 +2,17 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
+    flex-shrink: 0;
+    gap: 1.6rem;
+    width: 8rem;
 }
 
 .container p {
     text-align: center;
-    font-size: 16px;
+    font-size: 1.4rem;
     font-weight: 500;
+}
+
+.container img {
+    height: 60px;
 }

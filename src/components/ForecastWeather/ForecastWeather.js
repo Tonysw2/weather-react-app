@@ -1,18 +1,28 @@
-import { Sun } from 'phosphor-react';
 import React from 'react';
-import { weather } from '../../WeatherAPI/WeatherAPI';
+import { weather } from '../../weatherAPI/weatherAPI';
 import style from './ForecastWeather.module.css';
 
 export const ForecastWeather = ({ forecastWeather }) => {
     return (
         <div className={style.container}>
-            <p>
-                {weather.formatWeatherDate(forecastWeather, {
-                    weekday: 'long',
-                    hour: 'numeric',
-                })}
-            </p>
-            <Sun size={60} />
+            <div>
+                <p>
+                    {weather.formatWeatherDate(forecastWeather, {
+                        weekday: 'long',
+                    })}
+                </p>
+                <p>
+                    {weather.formatWeatherDate(forecastWeather, {
+                        hour: 'numeric',
+                    })}
+                </p>
+            </div>
+            <img
+                src={require(`../../images/${forecastWeather.weather[
+                    forecastWeather.weather.length - 1
+                ].main.toLowerCase()}.png`)}
+                alt={forecastWeather.weather[0].main}
+            />
             <p>
                 <span>{`${Math.round(forecastWeather.main.temp)}°C`}</span>
             </p>

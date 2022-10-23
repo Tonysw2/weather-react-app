@@ -16,4 +16,11 @@ html {
 #root {
     display: flex;
     justify-content: center;
+    align-items: center;
+}
+
+@media (max-width: 630px) {
+    html {
+        font-size: 50%;
+    }
 }

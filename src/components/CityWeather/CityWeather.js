@@ -1,4 +1,3 @@
-import { Cloud } from 'phosphor-react';
 import React from 'react';
 import style from './CityWeather.module.css';
 
@@ -8,8 +7,12 @@ const CityWeather = ({ weatherData }) => {
             <section className={style['section-weather']}>
                 <div className={style['container-weather']}>
                     <div className={style['wrap-temperature']}>
-                        <Cloud color="#e9ecef" size={60} />
                         <div className={style.temp}>
+                            <img
+                                className={style['weather-icon']}
+                                src={require(`../../images/${weatherData.weather.weather[0].main.toLowerCase()}.png`)}
+                                alt={`${weatherData.weather.weather[0].main}`}
+                            />
                             <p className={style.temperature}>
                                 {Math.round(weatherData.weather.main.temp)}
                             </p>
@@ -24,10 +27,17 @@ const CityWeather = ({ weatherData }) => {
                     </div>
                 </div>
                 <div className={style['general-information']}>
-                    <p className={style.city}>{weatherData.weather.name}</p>
+                    <p className={style.city}>
+                        {weatherData.weather.name},
+                        <span> {weatherData.weather.sys.country}</span>
+                    </p>
                     <p className={style.time}>{weatherData.weather.dt}</p>
                     <p className={style.weather}>
-                        {weatherData.weather.weather[0].description}
+                        {
+                            weatherData.weather.weather[
+                                weatherData.weather.weather.length - 1
+                            ].description
+                        }
                     </p>
                 </div>
             </section>
