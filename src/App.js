@@ -5,10 +5,12 @@ import './App.css';
 import CityWeather from './components/CityWeather/CityWeather';
 import { ForecastWeather } from './components/ForecastWeather/ForecastWeather';
 import Form from './components/Form.js/Form';
+import { SunWeather } from './components/SunWeather/SunWeather';
 import { weather } from './weatherAPI/weatherAPI';
 
 export function App() {
     const [weatherData, setWeatherData] = useState(false);
+    console.log(weatherData);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
@@ -26,13 +28,26 @@ export function App() {
             setWeatherData({
                 weather: {
                     ...localWeatherData,
-                    dt: weather.formatWeatherDate(localWeatherData, {
+                    dt: weather.formatWeatherDate(localWeatherData.dt, {
                         weekday: 'long',
                         hour: 'numeric',
                         minute: '2-digit',
                     }),
                 },
-                forecast: localForescastData,
+                forecast: {
+                    ...localForescastData,
+                    city: {
+                        ...localForescastData.city,
+                        sunrise: weather.formatWeatherDate(
+                            localForescastData.city.sunrise,
+                            { hour: 'numeric', minute: '2-digit' }
+                        ),
+                        sunset: weather.formatWeatherDate(
+                            localForescastData.city.sunset,
+                            { hour: 'numeric', minute: '2-digit' }
+                        ),
+                    },
+                },
             });
             setLoading(false);
         });
@@ -46,8 +61,14 @@ export function App() {
                 error={error}
                 setError={setError}
             />
-            {loading && <p>Loading...</p>}
-            {!loading && <CityWeather weatherData={weatherData} />}
+            {loading && (
+                <div className="loading">
+                    <p>Loading...</p>
+                </div>
+            )}
+            {!loading && weatherData && (
+                <CityWeather weatherData={weatherData} />
+            )}
             {!loading && weatherData && (
                 <div className="card">
                     {weatherData.forecast.list.map((forecastWeather) => (
@@ -57,6 +78,9 @@ export function App() {
                         />
                     ))}
                 </div>
+            )}
+            {!loading && weatherData && (
+                <SunWeather forecast={weatherData.forecast} />
             )}
         </div>
     );

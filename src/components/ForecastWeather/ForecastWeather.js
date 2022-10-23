@@ -7,12 +7,12 @@ export const ForecastWeather = ({ forecastWeather }) => {
         <div className={style.container}>
             <div>
                 <p>
-                    {weather.formatWeatherDate(forecastWeather, {
+                    {weather.formatWeatherDate(forecastWeather.dt, {
                         weekday: 'long',
                     })}
                 </p>
                 <p>
-                    {weather.formatWeatherDate(forecastWeather, {
+                    {weather.formatWeatherDate(forecastWeather.dt, {
                         hour: 'numeric',
                     })}
                 </p>

@@ -34,8 +34,11 @@ export const weather = {
             setError(error);
         }
     },
-    formatWeatherDate: (data, options) => {
-        const dateStr = String(data.dt).padEnd(String(data.dt).length + 3, '0');
+    formatWeatherDate: (weatherDate, options) => {
+        const dateStr = String(weatherDate).padEnd(
+            String(weatherDate).length + 3,
+            '0'
+        );
         const date = new Date(Number(dateStr));
         const newDate = date.toLocaleString('en-us', { ...options });
 

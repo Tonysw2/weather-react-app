@@ -1,0 +1,21 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    width: 30rem;
+}
+
+.wrap-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+}
+
+.sunrise,
+.sunset {
+    height: 10rem;
+}
+
+.wrap-content p {
+    font-size: 1.6rem;
+    text-align: center;
+}

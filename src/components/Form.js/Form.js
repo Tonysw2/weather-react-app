@@ -69,7 +69,7 @@ const Form = ({ setWeatherData, error, setError }) => {
                         .toUpperCase()}${error.response.data.message.slice(
                         1,
                         error.response.data.message.length
-                    )}, type city name again!`}</p>
+                    )}`}</p>
                 </div>
             )}
         </div>
