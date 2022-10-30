@@ -13,6 +13,13 @@ html {
     color: #e9ecef;
 }
 
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
 #root {
     display: flex;
     justify-content: center;

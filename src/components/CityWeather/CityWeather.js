@@ -1,22 +1,24 @@
 import React from 'react';
 import style from './CityWeather.module.css';
 
-const CityWeather = ({ weatherData }) => {
+export const CityWeather = ({ weatherData }) => {
     return (
         weatherData && (
             <section className={style['section-weather']}>
                 <div className={style['container-weather']}>
-                    <div className={style['wrap-temperature']}>
+                    <div className={style['wrap-temperature-info']}>
                         <div className={style.temp}>
                             <img
                                 className={style['weather-icon']}
                                 src={require(`../../images/${weatherData.weather.weather[0].main.toLowerCase()}.png`)}
                                 alt={`${weatherData.weather.weather[0].main}`}
                             />
-                            <p className={style.temperature}>
-                                {Math.round(weatherData.weather.main.temp)}
-                            </p>
-                            <span>°C</span>
+                            <div className={style['wrap-temp']}>
+                                <p className={style.temperature}>
+                                    {Math.round(weatherData.weather.main.temp)}
+                                </p>
+                                <span>°C</span>
+                            </div>
                         </div>
                     </div>
                     <div className={style['weather-detail']}>
@@ -24,6 +26,8 @@ const CityWeather = ({ weatherData }) => {
                         <p>{`Wind: ${Math.round(
                             weatherData.weather.wind.speed * 3.6
                         )} Km/h`}</p>
+                        <p>{`Max: ${weatherData.weather.tempMaxMin.max}°C`}</p>
+                        <p>{`Min: ${weatherData.weather.tempMaxMin.min}°C`}</p>
                     </div>
                 </div>
                 <div className={style['general-information']}>
@@ -44,5 +48,3 @@ const CityWeather = ({ weatherData }) => {
         )
     );
 };
-
-export default CityWeather;

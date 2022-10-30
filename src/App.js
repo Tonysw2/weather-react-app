@@ -1,18 +1,86 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { API_WEATHER } from './API/API';
 import './App.css';
-import CityWeather from './components/CityWeather/CityWeather';
+import { CityWeather } from './components/CityWeather/CityWeather';
 import { ForecastWeather } from './components/ForecastWeather/ForecastWeather';
-import Form from './components/Form.js/Form';
+import { Form } from './components/Form.js/Form';
 import { SunWeather } from './components/SunWeather/SunWeather';
-import { weather } from './weatherAPI/weatherAPI';
+import { weather } from './WeatherAPI/WeatherAPI';
 
 export function App() {
     const [weatherData, setWeatherData] = useState(false);
-    console.log(weatherData);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
+
+    const getTempMinMax = (data) => {
+        let max = data.list[0].main.temp_max;
+        let min = data.list[0].main.temp_min;
+        let tempMaxMin = { max: 0, min: 0 };
+
+        data.list.forEach((item) => {
+            if (item.main.temp_max > max) {
+                max = item.main.temp_max;
+            } else if (item.main.texmp_min < min) {
+                min = item.main.temp_min;
+            }
+        });
+
+        tempMaxMin.max = Math.round(max);
+        tempMaxMin.min = Math.round(min);
+
+        return tempMaxMin;
+    };
+
+    const submitHandler = useCallback(async (city) => {
+        const localWeatherData = await weather.getLocalWeatherCity(
+            city,
+            setError,
+            setLoading
+        );
+        const forecastWeatherData = await weather.getForescastWeatherCity(
+            city,
+            setError,
+            setLoading
+        );
+
+        if (
+            localWeatherData.response !== undefined ||
+            forecastWeatherData.response !== undefined
+        ) {
+            return alert(
+                localWeatherData?.response.data.message ||
+                    forecastWeatherData?.response.data.message
+            );
+        }
+
+        setWeatherData({
+            weather: {
+                ...localWeatherData,
+                dt: weather.formatWeatherDate(localWeatherData.dt, {
+                    weekday: 'long',
+                    hour: 'numeric',
+                    minute: '2-digit',
+                }),
+                tempMaxMin: getTempMinMax(forecastWeatherData),
+            },
+            forecast: {
+                ...forecastWeatherData,
+                city: {
+                    ...forecastWeatherData.city,
+                    sunrise: weather.formatWeatherDate(
+                        forecastWeatherData.city.sunrise,
+                        { hour: 'numeric', minute: '2-digit' }
+                    ),
+                    sunset: weather.formatWeatherDate(
+                        forecastWeatherData.city.sunset,
+                        { hour: 'numeric', minute: '2-digit' }
+                    ),
+                },
+            },
+        });
+        setError(false);
+    }, []);
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(async (position) => {
@@ -33,6 +101,7 @@ export function App() {
                         hour: 'numeric',
                         minute: '2-digit',
                     }),
+                    tempMaxMin: getTempMinMax(localForescastData),
                 },
                 forecast: {
                     ...localForescastData,
@@ -55,21 +124,16 @@ export function App() {
 
     return (
         <div className="app-container">
-            <Form
-                setWeatherData={setWeatherData}
-                setLoading={setLoading}
-                error={error}
-                setError={setError}
-            />
+            <Form onSubmitHandler={submitHandler} error={error} />
             {loading && (
                 <div className="loading">
                     <p>Loading...</p>
                 </div>
             )}
-            {!loading && weatherData && (
+            {!error && !loading && weatherData && (
                 <CityWeather weatherData={weatherData} />
             )}
-            {!loading && weatherData && (
+            {!error && !loading && weatherData && (
                 <div className="card">
                     {weatherData.forecast.list.map((forecastWeather) => (
                         <ForecastWeather
@@ -79,7 +143,7 @@ export function App() {
                     ))}
                 </div>
             )}
-            {!loading && weatherData && (
+            {!error && !loading && weatherData && (
                 <SunWeather forecast={weatherData.forecast} />
             )}
         </div>

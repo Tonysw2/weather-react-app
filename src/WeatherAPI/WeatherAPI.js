@@ -11,27 +11,34 @@ import { API_WEATHER } from '../API/API';
 // forecast?lat={lat}&lon={lon}&appid={API_WEATHER.key}
 
 export const weather = {
-    getLocalWeatherCity: async (city, setError) => {
+    getLocalWeatherCity: async (city, setError, setLoading) => {
         try {
+            setLoading(true);
             const response = await axios.get(
                 `${API_WEATHER.base}weather?q=${city}&appid=${API_WEATHER.key}&units=metric`
             );
             const data = response.data;
+            setLoading(false);
             return data;
         } catch (error) {
             setError(error);
+            setLoading(false);
+            return error;
         }
     },
-    getForescastWeatherCity: async (city, setError) => {
+    getForescastWeatherCity: async (city, setError, setLoading) => {
         try {
+            setLoading(true);
             const response = await axios.get(
                 `${API_WEATHER.base}forecast?q=${city}&appid=${API_WEATHER.key}&units=metric`
             );
             const data = response.data;
-            console.log(data);
+            setLoading(false);
             return data;
         } catch (error) {
             setError(error);
+            setLoading(false);
+            return error;
         }
     },
     formatWeatherDate: (weatherDate, options) => {

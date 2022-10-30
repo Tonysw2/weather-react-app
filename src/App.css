@@ -3,8 +3,6 @@
     flex-direction: column;
     align-items: center;
     gap: 4rem;
-
-    margin-top: 9.6rem;
 }
 
 .card {
@@ -39,11 +37,18 @@
 
 .loading {
     font-size: 3.6rem;
-    border-bottom: 1px solid #f59f00;
+    border-bottom: 1px solid #e9ecef;
 }
 
 @media (max-width: 940px) {
     .card {
         width: 59.4rem;
+    }
+}
+
+@media (max-width: 544px) {
+    .card {
+        width: 47.7rem;
+        transform: scale(0.95);
     }
 }

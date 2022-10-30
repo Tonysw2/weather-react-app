@@ -7,10 +7,10 @@
 
 .general-information {
     display: flex;
-    align-items: flex-end;
     justify-content: center;
     flex-direction: column;
     gap: 0.6rem;
+    text-align: end;
 }
 
 .city {
@@ -35,10 +35,14 @@
     gap: 1.6rem;
 }
 
-.wrap-temperature {
+.wrap-temperature-info {
     display: flex;
     align-items: flex-start;
     gap: 1.6rem;
+}
+
+.wrap-temp {
+    display: flex;
 }
 
 .temperature {
@@ -66,7 +70,7 @@
     height: 60px;
 }
 
-.wrap-temperature span {
+.wrap-temperature-info span {
     font-size: 1.6rem;
     padding: 0.8rem 0;
 }
@@ -74,5 +78,35 @@
 @media (max-width: 940px) {
     .section-weather {
         width: 54rem;
+        align-items: flex-start;
+    }
+
+    .container-weather {
+        align-items: center;
+    }
+
+    .temp {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 544px) {
+    .section-weather {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.6rem;
+    }
+
+    .container-weather {
+        order: 1;
+    }
+
+    .general-information {
+        text-align: start;
+    }
+
+    .temp {
+        flex-direction: row;
     }
 }
