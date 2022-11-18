@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import style from './Form.module.css';
+import style from './styles.module.css';
 
 export const Form = ({ onSubmitHandler, error }) => {
     const [focused, setFocused] = useState(false);

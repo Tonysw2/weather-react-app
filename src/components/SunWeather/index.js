@@ -1,4 +1,4 @@
-import style from './SunWeather.module.css';
+import style from './styles.module.css';
 
 export const SunWeather = ({ forecast }) => {
     return (

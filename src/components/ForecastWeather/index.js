@@ -1,6 +1,6 @@
 import React from 'react';
 import { weather } from '../../WeatherAPI/WeatherAPI';
-import style from './ForecastWeather.module.css';
+import style from './styles.module.css';
 
 export const ForecastWeather = ({ forecastWeather }) => {
     return (

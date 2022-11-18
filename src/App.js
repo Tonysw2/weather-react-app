@@ -2,10 +2,10 @@ import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 import { API_WEATHER } from './API/API';
 import './App.css';
-import { CityWeather } from './components/CityWeather/CityWeather';
-import { ForecastWeather } from './components/ForecastWeather/ForecastWeather';
-import { Form } from './components/Form.js/Form';
-import { SunWeather } from './components/SunWeather/SunWeather';
+import { CityWeather } from './components/CityWeather';
+import { ForecastWeather } from './components/ForecastWeather';
+import { Form } from './components/Form';
+import { SunWeather } from './components/SunWeather';
 import { weather } from './WeatherAPI/WeatherAPI';
 
 export function App() {
